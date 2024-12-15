@@ -80,7 +80,22 @@ namespace back_1_trimestre_2_daw_solitario.Controllers
             if (asiento == null)
                 return NotFound("Asiento no encontrado");
 
-            asiento.EstaReservado = estaReservado; 
+            asiento.EstaReservado = estaReservado;
+            return NoContent();
+        }
+
+
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var sala = salas.FirstOrDefault(b => b.Id == id);
+            if (sala == null)
+            {
+                return NotFound($"Opinión con ID {id} no encontrada.");
+            }
+
+            salas.Remove(sala);
             return NoContent();
         }
 

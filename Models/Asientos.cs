@@ -1,9 +1,9 @@
-public class Asiento
+public class Asientos
 {
     public int Numero { get; set; }
     public bool EstaReservado { get; set; }
 
-    public Asiento(int numero, bool estaReservado)
+    public Asientos(int numero, bool estaReservado)
     {
         Numero = numero;
         EstaReservado = estaReservado;

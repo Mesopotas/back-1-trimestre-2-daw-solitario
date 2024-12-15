@@ -54,14 +54,34 @@ namespace back_1_trimestre_2_daw_solitario.Controllers
         }
 
 
+        //Create a new "Sala", automatic Id
+
         [HttpPost]
         public ActionResult<Salas> Create([FromBody] Salas nuevaSala)
         {
             nuevaSala.Id = salas.Count > 0 ? salas.Max(s => s.Id) + 1 : 1;
-            
+
             nuevaSala.Asientos = InicializarAsientos(nuevaSala.Capacidad);
             salas.Add(nuevaSala);
             return CreatedAtAction(nameof(GetById), new { id = nuevaSala.Id }, nuevaSala);
+        }
+
+
+        //Modifi state of a site
+
+        [HttpPut("{id}/asientos/{numero}")]
+        public ActionResult ActualizarEstadoAsiento(int id, int numero, [FromBody] bool estaReservado)
+        {
+            var sala = salas.FirstOrDefault(s => s.Id == id);
+            if (sala == null)
+                return NotFound("Sala no encontrada");
+
+            var asiento = sala.Asientos.FirstOrDefault(a => a.Numero == numero);
+            if (asiento == null)
+                return NotFound("Asiento no encontrado");
+
+            asiento.EstaReservado = estaReservado; 
+            return NoContent();
         }
 
 
